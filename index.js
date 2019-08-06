@@ -124,7 +124,7 @@ function publish(options = {}, cb = noop) {
           include,
           exclude
         }),
-        force
+        backup
           ? client.list({
             prefix: normalize(output)
           })
@@ -166,7 +166,11 @@ function publish(options = {}, cb = noop) {
               return Upload(client, uploadFilesStats, config, cb)
             })
             .then(() => {
-              return Remove(client, uploadFilesStats, remoteFilesStats, config, cb)
+              if(force){
+                return Remove(client, uploadFilesStats, remoteFilesStats, config, cb)
+              }else{
+                return Promise.resolve()
+              }
             })
         })
         .then(() => {
