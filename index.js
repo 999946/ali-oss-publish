@@ -124,7 +124,7 @@ function publish(options = {}, cb = noop) {
           include,
           exclude
         }),
-        force || backup
+        force
           ? client.list({
             prefix: normalize(output)
           })
